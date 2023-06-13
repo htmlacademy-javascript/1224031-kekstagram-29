@@ -27,8 +27,7 @@ const numberExtraction = (string) => {
       stringNumbers += string.at(i);
     }
   }
-  parseInt(stringNumbers,10);
-  return stringNumbers;
+  return parseInt(stringNumbers,10);
 };
 
 numberExtraction('агент 007');
