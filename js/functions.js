@@ -1,14 +1,14 @@
 const stringLengthCheck = (string,maxLength) => {
-  string = string.toString();
-  const stringLength = string.length;
-  return stringLength <= maxLength;
-
+  if (typeof string !== 'string') {
+    string = string.toString();
+  }
+  return string.length <= maxLength;
 };
+
 stringLengthCheck('проверяемая строка', 10);
 
 const palindromeCheck = (string) => {
-  string = string.replaceAll(' ','');
-  string = string.toLowerCase();
+  string = string.replaceAll(' ','').toLowerCase();
   let emptyString = '';
 
   for (let i = string.length - 1; i >= 0; i--) {
@@ -16,10 +16,13 @@ const palindromeCheck = (string) => {
   }
   return string === emptyString;
 };
+
 palindromeCheck('топот');
 
 const numberExtraction = (string) => {
-  string = string.toString();
+  if (typeof string !== 'string') {
+    string = string.toString();
+  }
   string = string.replaceAll(' ','');
   let stringNumbers = '';
   for (let i = 0; i <= string.length - 1; i++) {
