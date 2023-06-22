@@ -106,3 +106,5 @@ const getPhotoDescriptionInfo = () => getIdArray().map((item, index) => (
     comments: commentsToPhoto()
   }
 ));
+
+getPhotoDescriptionInfo();
