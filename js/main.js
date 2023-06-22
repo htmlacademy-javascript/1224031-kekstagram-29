@@ -33,11 +33,24 @@ const DESCRIPTIONS = [
   'Только посмотрите на эту прелесть'
 ];
 
+const MIN_LIKES_COUNT = 15;
+const MAX_LIKES_COUNT = 200;
+
 //Вспомогательная функция для генерации случайного числа в заданном диапазоне
 const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 //Вспомогательная функция, возвращающая случайный элемент массива
 const getRandomArrayElement = (array) => array[Math.floor(Math.random() * array.length)];
+
+//Вспомогательная функция-генератор ID
+function createIdGenerator () {
+  let lastGeneratedId = 0;
+
+  return function () {
+    lastGeneratedId += 1;
+    return lastGeneratedId;
+  };
+}
 
 //Создаём массив идентификаторов
 const getIdArray = () => {
@@ -61,21 +74,22 @@ const getPhotoUrl = () => {
 const getPhotoLikes = () => {
   const result = [];
   for (let i = 1; i <= idCount; i++) {
-    result.push({likes: getRandomInteger(15,200)});
+    result.push({likes: getRandomInteger(MIN_LIKES_COUNT,MAX_LIKES_COUNT)});
   }
   return result;
 };
 
 //Создаём случайный объект-комментарий
+const generateCommentId = createIdGenerator();
 const getComment = () => ({
-  id: getRandomInteger(1,200),
+  id: generateCommentId(),
   avatar: `img/avatar-${getRandomInteger(1, 6)}.svg`,
   message: getRandomArrayElement(COMMENTS),
   name: getRandomArrayElement(NAMES)
 });
 
 //Создаём массив с комментариями
-const commentsToPhoto = Array.from({length: getRandomInteger(0, 30)}, getComment);
+const commentsToPhoto = () => Array.from({length: getRandomInteger(0, 30)}, getComment);
 
 //Создаём итоговый массив
 const getPhotoDescriptionInfo = () => getIdArray().map((item, index) => (
@@ -83,8 +97,6 @@ const getPhotoDescriptionInfo = () => getIdArray().map((item, index) => (
     ...getPhotoUrl()[index],
     description: DESCRIPTIONS[getRandomInteger(0,7)],
     ...getPhotoLikes()[index],
-    comments: commentsToPhoto
+    comments: commentsToPhoto()
   }
 ));
-
-getPhotoDescriptionInfo();
