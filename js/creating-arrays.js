@@ -29,7 +29,9 @@ const getPhotoUrl = () => {
   for (let i = 1; i <= idCount; i++) {
     result.push({url: `photos/${i}.jpg`});
   }
+  result.sort(()=>Math.random()-0.5)
   return result;
 };
+console.log(getPhotoUrl())
 
 export {getIdArray, getPhotoLikes, getPhotoUrl};
