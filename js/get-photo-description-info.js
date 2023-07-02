@@ -6,12 +6,15 @@ import {commentsToPhoto} from './comments-to-photo.js';
 const MIN_DESCRIPTIONS_STRING_NUMBER = 0;
 const MAX_DESCRIPTIONS_STRING_NUMBER = 7;
 
+const photoUrlArray = getPhotoUrl();
+const photoLikesArray = getPhotoLikes();
+
 //Создаём итоговый объект
 const getPhotoDescriptionInfo = () => getIdArray().map((item, index) => (
   { ...item,
-    ...getPhotoUrl()[index],
+    ...photoUrlArray[index],
     description: DESCRIPTIONS[getRandomInteger(MIN_DESCRIPTIONS_STRING_NUMBER,MAX_DESCRIPTIONS_STRING_NUMBER)],
-    ...getPhotoLikes()[index],
+    ...photoLikesArray[index],
     comments: commentsToPhoto()
   }
 ));
