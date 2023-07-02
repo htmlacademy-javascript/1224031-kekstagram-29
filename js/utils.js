@@ -1,3 +1,4 @@
+
 //Вспомогательная функция для генерации случайного числа в заданном диапазоне
 const getRandomInteger = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
