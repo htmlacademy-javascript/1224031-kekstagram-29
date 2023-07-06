@@ -15,6 +15,7 @@ const onDocumentKeydown = (evt) => {
 const openBigPicture = () => {
     bigPictureSection.classList.remove('hidden');
     document.addEventListener('keydown', onDocumentKeydown);
+
 };
 
 const closeBigPicture = () => {
@@ -22,12 +23,15 @@ const closeBigPicture = () => {
     document.removeEventListener('keydown', onDocumentKeydown);
 };
 
-bigPictureOpen.addEventListener('click', () => {
-  openBigPicture();
-});
+bigPictureOpen.forEach((i) =>
+  i.addEventListener('click', () => {
+    openBigPicture();
+  }))
+
 
 bigPictureClose.addEventListener('click', () => {
   closeBigPicture();
 });
 
 
+export {openBigPicture}
