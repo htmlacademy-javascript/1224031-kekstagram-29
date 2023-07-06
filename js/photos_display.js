@@ -6,18 +6,29 @@ const userPhotoTemplate = document.querySelector('#picture').content;
 const photoInfo = getPhotoDescriptionInfo();
 const userPhotosFragment = document.createDocumentFragment();
 
+//Заполняем миниатюру и окно показа фотографии данными
 photoInfo.forEach(({url, description,comments,likes}) => {
   const clonedPhoto = userPhotoTemplate.cloneNode(true);
 
+  //Миниатюра
   clonedPhoto.querySelector('.picture__img').src = url;
   clonedPhoto.querySelector('.picture__img').alt = description;
   clonedPhoto.querySelector('.picture__comments').textContent = comments.length;
   clonedPhoto.querySelector('.picture__likes').textContent = likes;
 
-  clonedPhoto.addEventListener('click', () => {
-    document.querySelector('.big-picture__img img').src = url
-  })
+  //Большое окно
+  clonedPhoto.querySelector('.picture__img').addEventListener('click', () => {
+    document.querySelector('.big-picture__img img').src = url;
+    document.querySelector('.likes-count').textContent = likes;
+    document.querySelector('.comments-count').textContent = comments.length;
+    document.querySelector('.social__caption').textContent = description;
+  });
+
   userPhotosFragment.appendChild(clonedPhoto);
 });
 
 userPhotosContainer.appendChild(userPhotosFragment);
+
+//Убираем блоки счётчика комментариев и загрузки новых комментариев
+
+
