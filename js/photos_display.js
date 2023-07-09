@@ -6,6 +6,10 @@ const userPhotoTemplate = document.querySelector('#picture').content;
 const photoInfo = getPhotoDescriptionInfo();
 const userPhotosFragment = document.createDocumentFragment();
 
+
+//Показываем заголовок
+document.querySelector('.pictures__title').classList.remove('visually-hidden');
+
 //Заполняем миниатюру и окно показа фотографии данными
 photoInfo.forEach(({url, description,comments,likes}) => {
   const clonedPhoto = userPhotoTemplate.cloneNode(true);
@@ -19,6 +23,7 @@ photoInfo.forEach(({url, description,comments,likes}) => {
   //Большое окно
   clonedPhoto.querySelector('.picture__img').addEventListener('click', () => {
     document.querySelector('.big-picture__img img').src = url;
+    document.querySelector('.big-picture__img img').alt = description
     document.querySelector('.likes-count').textContent = likes;
     document.querySelector('.comments-count').textContent = comments.length;
     document.querySelector('.social__caption').textContent = description;
