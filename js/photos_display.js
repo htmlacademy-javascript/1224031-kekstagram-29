@@ -1,7 +1,7 @@
 import {getPhotoDescriptionInfo} from './get-photo-description-info.js';
 
 const userPhotosContainer = document.querySelector('.pictures');
-const userPhotoTemplate = document.querySelector('#picture').content;
+const userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const photoInfo = getPhotoDescriptionInfo();
 const userPhotosFragment = document.createDocumentFragment();
@@ -9,12 +9,12 @@ const userPhotosFragment = document.createDocumentFragment();
 
 //Показываем заголовок
 document.querySelector('.pictures__title').classList.remove('visually-hidden');
-
 //Заполняем миниатюру и окно показа фотографии данными
-photoInfo.forEach(({url, description,comments,likes}) => {
+photoInfo.forEach(({id,url,description,comments,likes}) => {
   const clonedPhoto = userPhotoTemplate.cloneNode(true);
 
   //Миниатюра
+  clonedPhoto.dataset.id = id;
   clonedPhoto.querySelector('.picture__img').src = url;
   clonedPhoto.querySelector('.picture__img').alt = description;
   clonedPhoto.querySelector('.picture__comments').textContent = comments.length;
