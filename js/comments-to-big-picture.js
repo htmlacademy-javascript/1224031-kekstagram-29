@@ -1,5 +1,3 @@
-import {commentsToPhoto} from './comments-to-photo.js';
-
 const commentsList = document.querySelector('.social__comments');
 commentsList.innerHTML = '';
 
@@ -13,21 +11,23 @@ commentsList.insertAdjacentHTML('beforebegin', `<li class="social__comment">
 </li>`
 );
 
-const commentsArray = commentsToPhoto();
-
 const userCommentFragment = document.createDocumentFragment();
 
-commentsArray.forEach(({avatar, message, name}) => {
-  const clonedComment = document.querySelector('.social__comment').cloneNode(true);
+const commentsToBigPicture = (commentsArray) => {
+  commentsArray.forEach(({avatar, message, name}) => {
+    const clonedComment = document.querySelector('.social__comment').cloneNode(true);
 
-  clonedComment.querySelector('.social__picture').src = avatar;
-  clonedComment.querySelector('.social__picture').alt = name;
-  clonedComment.querySelector('.social__text').textContent = message;
+    clonedComment.querySelector('.social__picture').src = avatar;
+    clonedComment.querySelector('.social__picture').alt = name;
+    clonedComment.querySelector('.social__text').textContent = message;
 
-  userCommentFragment.appendChild(clonedComment);
-});
+    userCommentFragment.appendChild(clonedComment);
+  });
 
-commentsList.appendChild(userCommentFragment);
+  commentsList.appendChild(userCommentFragment);
+}
 
 //Удаляем первый пустой элемент списка
 document.querySelector('.social__comment').remove();
+
+export {commentsToBigPicture}
