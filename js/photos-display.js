@@ -1,5 +1,5 @@
 import {getPhotoDescriptionInfo} from './get-photo-description-info.js';
-import {commentsToBigPicture} from "./comments-to-big-picture.js";
+import {commentsToBigPicture} from './comments-to-big-picture.js';
 
 const userPhotosContainer = document.querySelector('.pictures');
 const userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -10,6 +10,7 @@ const userPhotosFragment = document.createDocumentFragment();
 
 //Показываем заголовок
 document.querySelector('.pictures__title').classList.remove('visually-hidden');
+
 //Заполняем миниатюру и окно показа фотографии данными
 photoInfo.forEach(({id,url,description,comments,likes}) => {
   const clonedPhoto = userPhotoTemplate.cloneNode(true);
@@ -24,18 +25,16 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
   //Большое окно
   clonedPhoto.querySelector('.picture__img').addEventListener('click', () => {
     document.querySelector('.big-picture__img img').src = url;
-    document.querySelector('.big-picture__img img').alt = description
+    document.querySelector('.big-picture__img img').alt = description;
     document.querySelector('.likes-count').textContent = likes;
     document.querySelector('.comments-count').textContent = comments.length;
     document.querySelector('.social__caption').textContent = description;
-    commentsToBigPicture(comments)
+    commentsToBigPicture(comments);
   });
 
   userPhotosFragment.appendChild(clonedPhoto);
 });
 
 userPhotosContainer.appendChild(userPhotosFragment);
-
-//Убираем блоки счётчика комментариев и загрузки новых комментариев
 
 
