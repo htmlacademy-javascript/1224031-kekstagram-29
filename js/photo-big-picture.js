@@ -42,14 +42,3 @@ bigPictureOpen.forEach((i) =>
 bigPictureClose.addEventListener('click', () => {
   closeBigPicture();
 });
-
-/*const getBigPictureDescription = (clonedTemplate) => {
-  return clonedTemplate.querySelector('.picture__img').addEventListener('click', () => {
-    document.querySelector('.big-picture__img img').src = url
-    document.querySelector('.likes-count').textContent = likes
-    document.querySelector('.comments-count').textContent = comments.length
-    document.querySelector('.social__caption').textContent = description
-  })
-}
-
-export {getBigPictureDescription}*/

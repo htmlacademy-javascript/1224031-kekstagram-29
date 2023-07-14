@@ -1,7 +1,8 @@
-const commentsList = document.querySelector('.social__comments');
-commentsList.innerHTML = '';
+const commentsToBigPicture = (commentsArray) => {
+  const commentsList = document.querySelector('.social__comments');
+  commentsList.innerHTML = '';
 
-commentsList.insertAdjacentHTML('beforebegin', `<li class="social__comment">
+  commentsList.insertAdjacentHTML('beforebegin', `<li class="social__comment">
     <img
         class="social__picture"
         src=""
@@ -9,11 +10,10 @@ commentsList.insertAdjacentHTML('beforebegin', `<li class="social__comment">
         width="35" height="35">
     <p class="social__text"></p>
 </li>`
-);
+  );
 
-const userCommentFragment = document.createDocumentFragment();
+  const userCommentFragment = document.createDocumentFragment();
 
-const commentsToBigPicture = (commentsArray) => {
   commentsArray.forEach(({avatar, message, name}) => {
     const clonedComment = document.querySelector('.social__comment').cloneNode(true);
 
@@ -25,9 +25,9 @@ const commentsToBigPicture = (commentsArray) => {
   });
 
   commentsList.appendChild(userCommentFragment);
-}
 
-//Удаляем первый пустой элемент списка
-document.querySelector('.social__comment').remove();
+  //Удаляем первый пустой элемент списка
+  document.querySelector('.social__comment').remove();
+};
 
-export {commentsToBigPicture}
+export {commentsToBigPicture};

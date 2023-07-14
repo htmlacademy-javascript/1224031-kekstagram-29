@@ -1,9 +1,5 @@
 import {getPhotoDescriptionInfo} from './get-photo-description-info.js';
 import {commentsToBigPicture} from "./comments-to-big-picture.js";
-import {commentsToPhoto} from './comments-to-photo.js';
-
-const commentsArray = commentsToPhoto();
-console.log(commentsArray)
 
 const userPhotosContainer = document.querySelector('.pictures');
 const userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -32,7 +28,7 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
     document.querySelector('.likes-count').textContent = likes;
     document.querySelector('.comments-count').textContent = comments.length;
     document.querySelector('.social__caption').textContent = description;
-    commentsToBigPicture(commentsArray)
+    commentsToBigPicture(comments)
   });
 
   userPhotosFragment.appendChild(clonedPhoto);
