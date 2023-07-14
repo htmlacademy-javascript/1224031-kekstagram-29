@@ -7,6 +7,8 @@ const userPhotoTemplate = document.querySelector('#picture').content.querySelect
 const photoInfo = getPhotoDescriptionInfo();
 const userPhotosFragment = document.createDocumentFragment();
 
+const commentsLoadButton = document.querySelector('.comments-loader');
+
 
 //Показываем заголовок
 document.querySelector('.pictures__title').classList.remove('visually-hidden');
@@ -29,7 +31,46 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
     document.querySelector('.likes-count').textContent = likes;
     document.querySelector('.comments-count').textContent = comments.length;
     document.querySelector('.social__caption').textContent = description;
-    commentsToBigPicture(comments);
+
+    if (comments.length <= 5) {
+      commentsToBigPicture(comments)
+      commentsLoadButton.classList.add('hidden')
+    }
+
+    if (comments.length > 5) {
+      let counter = 10;
+      commentsLoadButton.classList.remove('hidden')
+      commentsToBigPicture(comments.slice(0,5))
+      commentsLoadButton.addEventListener('click', () => {
+        commentsToBigPicture(comments.slice(0,counter))
+        counter += 5
+      })
+
+        if (counter > comments.length) {
+          commentsLoadButton.classList.add('hidden')
+          commentsLoadButton.removeEventListener('click', () => {
+            commentsToBigPicture(comments.slice(0,counter))
+            counter += 5
+          })
+        }
+      }
+
+    //Обновление списка комментариев по нажатию кнопки "Загрузить ещё"
+      /*let counter = 5;
+      if (comments.length <= 5) {
+        commentsToBigPicture(comments);
+        commentsLoadButton.classList.add('hidden')
+      } else if (comments.length > 5){
+        commentsLoadButton.classList.remove('hidden')
+        commentsToBigPicture(comments.slice(0, 5));
+        counter += 5;
+
+        commentsLoadButton.addEventListener('click', () => {
+          console.log(counter)
+          commentsToBigPicture(comments.slice(0, counter));
+          counter += 5;
+        })
+      }*/
   });
 
   userPhotosFragment.appendChild(clonedPhoto);
