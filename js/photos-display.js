@@ -41,18 +41,19 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
 
     if (comments.length > 5) {
 
-      let counter = 5;
-      commentsToBigPicture(comments.slice(0,counter))
-      commentsLoadButton.classList.remove('hidden')
-
       const getComments = (counter) => {
         counter += 5;
         commentsToBigPicture(comments.slice(0,counter))
         commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
       }
 
+      let counter = 5;
+      commentsToBigPicture(comments.slice(0,counter))
+      commentsLoadButton.classList.remove('hidden')
+      commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
+
       commentsLoadButton.addEventListener('click', () => {
-        getComments(counter);
+        getComments(counter)
       })
     }
   });
