@@ -8,6 +8,7 @@ const photoInfo = getPhotoDescriptionInfo();
 const userPhotosFragment = document.createDocumentFragment();
 
 const commentsLoadButton = document.querySelector('.comments-loader');
+const commentsCounter = document.querySelector('.social__comment-count')
 
 
 //Показываем заголовок
@@ -32,45 +33,28 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
     document.querySelector('.comments-count').textContent = comments.length;
     document.querySelector('.social__caption').textContent = description;
 
-    if (comments.length <= 5) {
-      commentsToBigPicture(comments)
-      commentsLoadButton.classList.add('hidden')
-    }
-
-    if (comments.length > 5) {
-      let counter = 10;
-      commentsLoadButton.classList.remove('hidden')
+    if(comments.length <= 5) {
       commentsToBigPicture(comments.slice(0,5))
-      commentsLoadButton.addEventListener('click', () => {
-        commentsToBigPicture(comments.slice(0,counter))
-        counter += 5
-      })
-
-        if (counter > comments.length) {
-          commentsLoadButton.classList.add('hidden')
-          commentsLoadButton.removeEventListener('click', () => {
-            commentsToBigPicture(comments.slice(0,counter))
-            counter += 5
-          })
-        }
+      commentsLoadButton.classList.add('hidden')
+      commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`
       }
 
-    //Обновление списка комментариев по нажатию кнопки "Загрузить ещё"
-      /*let counter = 5;
-      if (comments.length <= 5) {
-        commentsToBigPicture(comments);
-        commentsLoadButton.classList.add('hidden')
-      } else if (comments.length > 5){
-        commentsLoadButton.classList.remove('hidden')
-        commentsToBigPicture(comments.slice(0, 5));
-        counter += 5;
+    if (comments.length > 5) {
 
-        commentsLoadButton.addEventListener('click', () => {
-          console.log(counter)
-          commentsToBigPicture(comments.slice(0, counter));
-          counter += 5;
-        })
-      }*/
+      let counter = 5;
+      commentsToBigPicture(comments.slice(0,counter))
+      commentsLoadButton.classList.remove('hidden')
+
+      const getComments = (counter) => {
+        counter += 5;
+        commentsToBigPicture(comments.slice(0,counter))
+        commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
+      }
+
+      commentsLoadButton.addEventListener('click', () => {
+        getComments(counter);
+      })
+    }
   });
 
   userPhotosFragment.appendChild(clonedPhoto);
