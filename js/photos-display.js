@@ -41,7 +41,7 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
 
     if (comments.length > 5) {
 
-      const getComments = (counter) => {
+      const getComments = () => {
         counter += 5;
         commentsToBigPicture(comments.slice(0,counter))
         commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
@@ -52,9 +52,15 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
       commentsLoadButton.classList.remove('hidden')
       commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
 
-      commentsLoadButton.addEventListener('click', () => {
-        getComments(counter)
-      })
+      commentsLoadButton.addEventListener('click', getComments)
+
+      //Вот это условие не работает
+      if (counter >= comments.length) {
+        commentsLoadButton.removeEventListener('click', getComments)
+        commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`
+        commentsToBigPicture()
+        commentsLoadButton.classList.add('hidden')
+      }
     }
   });
 
