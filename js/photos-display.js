@@ -33,7 +33,13 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
     document.querySelector('.comments-count').textContent = comments.length;
     document.querySelector('.social__caption').textContent = description;
 
-    if(comments.length <= 5) {
+    if (comments.length === 0) {
+      commentsToBigPicture(comments)
+      commentsCounter.innerHTML = `Комментариев нет`
+      commentsLoadButton.classList.add('hidden')
+    }
+
+    if(comments.length <= 5 && comments.length !== 0) {
       commentsToBigPicture(comments.slice(0,5))
       commentsLoadButton.classList.add('hidden')
       commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`
@@ -41,26 +47,26 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
 
     if (comments.length > 5) {
 
+      let counter = 5;
+
       const getComments = () => {
         counter += 5;
         commentsToBigPicture(comments.slice(0,counter))
         commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
+        if (counter >= comments.length) {
+          commentsLoadButton.removeEventListener('click', getComments)
+          commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`
+          commentsToBigPicture(comments)
+          commentsLoadButton.classList.add('hidden')
+        }
       }
 
-      let counter = 5;
       commentsToBigPicture(comments.slice(0,counter))
       commentsLoadButton.classList.remove('hidden')
       commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
 
       commentsLoadButton.addEventListener('click', getComments)
 
-      //Вот это условие не работает
-      if (counter >= comments.length) {
-        commentsLoadButton.removeEventListener('click', getComments)
-        commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`
-        commentsToBigPicture()
-        commentsLoadButton.classList.add('hidden')
-      }
     }
   });
 
