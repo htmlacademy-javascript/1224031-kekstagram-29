@@ -30,7 +30,6 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
     document.querySelector('.big-picture__img img').src = url;
     document.querySelector('.big-picture__img img').alt = description;
     document.querySelector('.likes-count').textContent = likes;
-    document.querySelector('.comments-count').textContent = comments.length;
     document.querySelector('.social__caption').textContent = description;
 
     if (comments.length === 0) {
