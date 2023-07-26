@@ -8,7 +8,7 @@ const photoInfo = getPhotoDescriptionInfo();
 const userPhotosFragment = document.createDocumentFragment();
 
 const commentsLoadButton = document.querySelector('.comments-loader');
-const commentsCounter = document.querySelector('.social__comment-count')
+const commentsCounter = document.querySelector('.social__comment-count');
 
 
 //Показываем заголовок
@@ -33,16 +33,16 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
     document.querySelector('.social__caption').textContent = description;
 
     if (comments.length === 0) {
-      commentsToBigPicture(comments)
-      commentsCounter.innerHTML = `Комментариев нет`
-      commentsLoadButton.classList.add('hidden')
+      commentsToBigPicture(comments);
+      commentsCounter.innerHTML = 'Комментариев нет';
+      commentsLoadButton.classList.add('hidden');
     }
 
     if(comments.length <= 5 && comments.length !== 0) {
-      commentsToBigPicture(comments.slice(0,5))
-      commentsLoadButton.classList.add('hidden')
-      commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`
-      }
+      commentsToBigPicture(comments.slice(0,5));
+      commentsLoadButton.classList.add('hidden');
+      commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`;
+    }
 
     if (comments.length > 5) {
 
@@ -50,21 +50,21 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
 
       const getComments = () => {
         counter += 5;
-        commentsToBigPicture(comments.slice(0,counter))
-        commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
+        commentsToBigPicture(comments.slice(0,counter));
+        commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`;
         if (counter >= comments.length) {
-          commentsLoadButton.removeEventListener('click', getComments)
-          commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`
-          commentsToBigPicture(comments)
-          commentsLoadButton.classList.add('hidden')
+          commentsLoadButton.removeEventListener('click', getComments);
+          commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`;
+          commentsToBigPicture(comments);
+          commentsLoadButton.classList.add('hidden');
         }
-      }
+      };
 
-      commentsToBigPicture(comments.slice(0,counter))
-      commentsLoadButton.classList.remove('hidden')
-      commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`
+      commentsToBigPicture(comments.slice(0,counter));
+      commentsLoadButton.classList.remove('hidden');
+      commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`;
 
-      commentsLoadButton.addEventListener('click', getComments)
+      commentsLoadButton.addEventListener('click', getComments);
 
     }
   });
