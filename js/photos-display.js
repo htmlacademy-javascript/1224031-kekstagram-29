@@ -1,5 +1,6 @@
 import {getPhotoDescriptionInfo} from './get-photo-description-info.js';
 import {commentsToBigPicture} from './comments-to-big-picture.js';
+import {isEscapeKey} from './utils.js';
 
 const userPhotosContainer = document.querySelector('.pictures');
 const userPhotoTemplate = document.querySelector('#picture').content.querySelector('.picture');
@@ -36,15 +37,11 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
       commentsToBigPicture(comments);
       commentsCounter.innerHTML = 'Комментариев нет';
       commentsLoadButton.classList.add('hidden');
-    }
-
-    if(comments.length <= 5 && comments.length !== 0) {
+    } else if (comments.length <= 5) {
       commentsToBigPicture(comments.slice(0,5));
       commentsLoadButton.classList.add('hidden');
       commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`;
-    }
-
-    if (comments.length > 5) {
+    } else {
 
       let counter = 5;
 
@@ -53,10 +50,19 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
         commentsToBigPicture(comments.slice(0,counter));
         commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`;
         if (counter >= comments.length) {
-          commentsLoadButton.removeEventListener('click', getComments);
           commentsCounter.innerHTML = `${comments.length} из <span class="comments-count">${comments.length}</span> комментариев`;
           commentsToBigPicture(comments);
           commentsLoadButton.classList.add('hidden');
+        }
+      };
+
+      const getCommentsListenerRemove = (evt) => {
+        commentsLoadButton.removeEventListener('click', getComments);
+        document.querySelector('.big-picture__cancel').removeEventListener('click', getCommentsListenerRemove);
+        if (isEscapeKey(evt)) {
+          evt.preventDefault();
+          document.querySelector('.big-picture__cancel').removeEventListener('click', getCommentsListenerRemove);
+          document.removeEventListener('keydown', getCommentsListenerRemove);
         }
       };
 
@@ -65,7 +71,8 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
       commentsCounter.innerHTML = `${counter} из <span class="comments-count">${comments.length}</span> комментариев`;
 
       commentsLoadButton.addEventListener('click', getComments);
-
+      document.querySelector('.big-picture__cancel').addEventListener('click', getCommentsListenerRemove);
+      document.addEventListener('keydown', getCommentsListenerRemove);
     }
   });
 
@@ -73,5 +80,3 @@ photoInfo.forEach(({id,url,description,comments,likes}) => {
 });
 
 userPhotosContainer.appendChild(userPhotosFragment);
-
-
