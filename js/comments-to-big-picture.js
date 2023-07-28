@@ -26,6 +26,7 @@ const commentsToBigPicture = (commentsArray) => {
 
   commentsList.appendChild(userCommentFragment);
 
+
   //Удаляем первый пустой элемент списка
   document.querySelector('.social__comment').remove();
 };
