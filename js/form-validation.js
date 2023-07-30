@@ -50,24 +50,33 @@ const getTagsArray = (tags) => {
   return value;
 };
 
-const hasValidLength = (tags) => {
+const getValidLength = (tags) => {
   getTagsArray(tags).every(tag => tag.length >= MIN_HASHTAG_LENGTH && tag.length <= MAX_HASHTAG_LENGTH);
 };
 
-const getValidSymbols = (tags) => getTagsArray(tags).every(HASHTAG_REGULAR_VALIDATE.test(hashtagInputField.value));
+const getValidSymbols = (tags) => getTagsArray(tags).every(tag => HASHTAG_REGULAR_VALIDATE.test(tag));
+
+const getUniqueTags = (tags) => {
+  const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
+  return lowerCaseTags.length === new Set(lowerCaseTags).size;
+};
 
 pristine.addValidator(
   hashtagInputField,
-  hasValidLength,
-  'Длина хештега от 2 до 20 символов',
-  true
+  getValidLength,
+  'Длина хештега от 2 до 20 символов'
 );
 
 pristine.addValidator(
   hashtagInputField,
   getValidSymbols,
-  'Хэштег должен начинаться с #, допустимы только буквы и цифры',
-  true
+  'Хэштег должен начинаться с #, допустимы только буквы и цифры, хэштег не может состоять только из #'
+);
+
+pristine.addValidator(
+  hashtagInputField,
+  getUniqueTags,
+  'Хэштеги не должны повторяться'
 );
 
 photoUploadForm.addEventListener('submit', (evt) => {
