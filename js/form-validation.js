@@ -1,4 +1,6 @@
 import {isEscapeKey} from './utils.js';
+import {resetEffects} from "./photo-effects.js";
+import {resetScale} from "./photo-scale.js";
 
 const photoUploadForm = document.querySelector('.img-upload__form');
 const photoUploadField = document.querySelector('.img-upload__input');
@@ -17,6 +19,8 @@ const HASHTAG_REGULAR_VALIDATE = /^#[a-zа-яё0-9]{1,19}$/i;
 const closeUploadOverlay = () => {
   photoUploadOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  resetScale();
+  resetEffects();
   closeUploadOverlayButton.removeEventListener('click', closeUploadOverlay);
   photoUploadField.value = '';
 };

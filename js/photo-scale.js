@@ -20,6 +20,12 @@ const getPhotoBigger = () => {
   photoPreview.style.transform = `scale(${parseInt(photoScaleValue.value) / 100})`
 };
 
+const resetScale = () => {
+  photoScaleValue.value = DEFAULT_VALUE;
+  photoPreview.style.transform = `scale(${DEFAULT_VALUE / 100})`;
+}
 
 scaleSmallerButton.addEventListener('click', getPhotoSmaller);
 scaleBiggerButton.addEventListener('click', getPhotoBigger);
+
+export {resetScale}
