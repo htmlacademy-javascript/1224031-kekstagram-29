@@ -50,8 +50,12 @@ const getTagsArray = (tags) => {
   return value;
 };
 
+const arrLengthCheck = (tag) => {
+  return tag.length >= MIN_HASHTAG_LENGTH && tag.length <= MAX_HASHTAG_LENGTH
+}
+
 const hasValidLength = (tags) => {
-  getTagsArray(tags).forEach(tags.length >= MIN_HASHTAG_LENGTH && tags.length <= MAX_HASHTAG_LENGTH);
+  getTagsArray(tags).every(arrLengthCheck(tags));
 };
 
 const getValidSymbols = () => HASHTAG_REGULAR_VALIDATE.test(hashtagInputField.value);
