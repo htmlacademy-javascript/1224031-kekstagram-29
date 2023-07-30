@@ -8,6 +8,7 @@ const closeUploadOverlayButton = document.querySelector('.img-upload__cancel');
 
 const hashtagInputField = document.querySelector('.text__hashtags');
 
+const MAX_HASHTAG_COUNT = 5;
 const MIN_HASHTAG_LENGTH = 2;
 const MAX_HASHTAG_LENGTH = 20;
 const HASHTAG_REGULAR_VALIDATE = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -57,9 +58,11 @@ const getValidLength = (tags) => {
 const getValidSymbols = (tags) => getTagsArray(tags).every(tag => HASHTAG_REGULAR_VALIDATE.test(tag));
 
 const getUniqueTags = (tags) => {
-  const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
+  const lowerCaseTags = getTagsArray(tags).map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
+
+const getValidCount = (tags) => getTagsArray(tags).length <= MAX_HASHTAG_COUNT;
 
 pristine.addValidator(
   hashtagInputField,
@@ -78,6 +81,13 @@ pristine.addValidator(
   getUniqueTags,
   'Хэштеги не должны повторяться'
 );
+
+pristine.addValidator(
+  hashtagInputField,
+  getValidCount,
+  'Не более 5 хэштегов'
+);
+
 
 photoUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
