@@ -51,9 +51,8 @@ const getTagsArray = (tags) => {
   return value;
 };
 
-const getValidLength = (tags) => {
+const getValidLength = (tags) =>
   getTagsArray(tags).every(tag => tag.length >= MIN_HASHTAG_LENGTH && tag.length <= MAX_HASHTAG_LENGTH);
-};
 
 const getValidSymbols = (tags) => getTagsArray(tags).every(tag => HASHTAG_REGULAR_VALIDATE.test(tag));
 
